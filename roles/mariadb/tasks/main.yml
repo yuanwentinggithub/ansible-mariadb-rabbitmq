@@ -1,0 +1,27 @@
+---
+# tasks file for mariadb
+- name: install mariadb
+  yum: name={{ item }} state=present
+  with_items:
+   - mariadb-server
+   - mariadb
+  register: results
+  ignore_errors: True
+
+- name: Configure SELinux to start mysql on any port
+  seboolean: name=mysql_connect_any state=true persistent=yes
+  when: ansible_selinux.status == "enabled"
+
+- name: Create Mysql configuration file
+  template: src=my.cnf.j2 dest=/etc/my.cnf
+
+- name: Start Mysql Service
+  command: "{{ item }}"
+  with_items:
+    - service  mariadb start
+    - chkconfig mariadb on
+  when: results.rc == 0
+- debug: var=ansible_distribution
+- debug: var=ansible_distribution_version
+- debug: var=ansible_eth0.device
+- debug: var=hostvars[inventory_hostname]

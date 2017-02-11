@@ -1,0 +1,24 @@
+---
+# tasks file for rabbitmq
+- name: install epel7.8
+  command: rpm -Uvh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm
+  args:
+    chdir: /tmp
+    creates: /etc/yum.repos.d/epel.repo
+  register: results_yum
+
+- name: install erlang and rabbitmq
+  yum: name={{ item }} state=present
+  with_items:
+   - erlang
+   - rabbitmq-server
+  when: results_yum.rc == 0
+  register: results_rabb
+
+- name: start and enable rabbitmq-server
+  command: "{{ item }}"
+  with_items:
+   - service rabbitmq-server start
+   - chkconfig rabbitmq-server on
+  when: results_rabb.rc == 0
+

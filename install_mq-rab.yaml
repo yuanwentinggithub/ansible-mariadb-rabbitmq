@@ -1,0 +1,8 @@
+- name: use role install mariadb and rabbitmq
+  hosts: mq-rab
+  sudo: True
+  gather_facts: True
+  serial: 1
+  roles:
+    - role: mariadb
+    - role: rabbitmq

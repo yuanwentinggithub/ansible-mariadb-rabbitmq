@@ -1,0 +1,12 @@
+[ansible_ubuntu]
+172.30.127.228
+
+[mq-rab]
+172.30.127.139
+172.30.127.122
+
+[ansible_centos]
+172.30.127.139
+172.30.127.120
+dbserver ansible_ssh_host=172.30.127.236 ansible_ssh_port=22
+testserver ansible_ssh_host=172.30.127.237 ansible_ssh_port=22
