@@ -1,1 +1,1 @@
-# ansible-mariadb-rabbitmq
+# ansible-mariadb-rabbitmq install mariadb and rabbitmq
